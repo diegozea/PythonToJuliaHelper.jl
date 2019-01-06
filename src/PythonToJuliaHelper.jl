@@ -25,10 +25,12 @@ const PYTHON2JULIA_WORDS = Pair{Regex, String}[
 Return the indentation of the line.
 
 ```jldoctest
-julia> get_indentation("        if value:")
+julia> using PythonToJuliaHelper
+
+julia> PythonToJuliaHelper.get_indentation("        if value:")
 "        "
 
-julia> get_indentation("def fun(arg):")
+julia> PythonToJuliaHelper.get_indentation("def fun(arg):")
 ""
 
 ```
@@ -105,11 +107,13 @@ end
 Python | lambda x, y : y + x * 2
 Julia  | (x,y) -> y + x * 2
 
-```julia
-julia> anonymous_function("lambda x, y : y + x * 2")
+```jldoctest
+julia> using PythonToJuliaHelper
+
+julia> PythonToJuliaHelper.anonymous_function("lambda x, y : y + x * 2")
 "(x, y) -> y + x * 2"
 
-julia> anonymous_function("lambda x : x * 2")
+julia> PythonToJuliaHelper.anonymous_function("lambda x : x * 2")
 "x -> x * 2"
 
 ```
@@ -135,20 +139,22 @@ Python's `range(3)` and `range(0, 3)` (i.e. 0,1,2) are going to be Julia's `0:3`
 
 Python's `range` and `xrange` are translated to ranges unless `collect=true`.
 
-```julia
-julia> ranges("range(stop)")
+```jldoctest
+julia> using PythonToJuliaHelper
+
+julia> PythonToJuliaHelper.ranges("range(stop)")
 "0:stop"
 
-julia> ranges("range(start, stop)")
+julia> PythonToJuliaHelper.ranges("range(start, stop)")
 "start:stop"
 
-julia> ranges("range(start,stop,step)")
+julia> PythonToJuliaHelper.ranges("range(start,stop,step)")
 "start:step:stop"
 
-julia> ranges("range(start,stop,step)", collect=true)
+julia> PythonToJuliaHelper.ranges("range(start,stop,step)", collect=true)
 "collect(start:step:stop)"
 
-julia> ranges("xrange(start,stop,step)", collect=true)
+julia> PythonToJuliaHelper.ranges("xrange(start,stop,step)", collect=true)
 "start:step:stop"
 
 ```
